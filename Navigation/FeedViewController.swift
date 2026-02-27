@@ -2,28 +2,41 @@
 //  FeedViewController.swift
 //  Navigation
 //
-//  Created by Артем Смирнов on 27.02.2026.
-//
 
 import UIKit
 
 class FeedViewController: UIViewController {
 
+    /// Пост, который передаём на экран поста при нажатии кнопки.
+    private let post = Post(title: "Первый пост")
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemYellow
+        setupOpenPostButton()
     }
-    
 
-    /*
-    // MARK: - Navigation
+    private func setupOpenPostButton() {
+        let button = UIButton(type: .system)
+        button.setTitle("Открыть пост", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 12
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(openPostTapped), for: .touchUpInside)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        view.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            button.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
-    */
 
+    @objc private func openPostTapped() {
+        let postVC = PostViewController()
+        postVC.post = post
+        navigationController?.pushViewController(postVC, animated: true)
+    }
 }
