@@ -22,7 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let profileViewController = ProfileViewController()
         profileViewController.title = "Профиль"
-        profileViewController.view.backgroundColor = .systemBlue
         
         let tabBarController = UITabBarController()
         
