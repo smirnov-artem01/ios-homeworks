@@ -1,8 +1,3 @@
-//
-//  PostViewController.swift
-//  Navigation
-//
-
 import UIKit
 
 class PostViewController: UIViewController {
@@ -12,7 +7,7 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemIndigo
-        title = post?.title ?? "Пост"
+        title = post?.author ?? "Пост"  // или post?.description
         setupInfoBarButton()
     }
 

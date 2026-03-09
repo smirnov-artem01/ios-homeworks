@@ -2,48 +2,78 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let profileHeaderView = ProfileHeaderView()
-    
-    private let bottomButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Bottom Button", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 14
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
+    
+    private let posts = Post.makePosts()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
-        view.backgroundColor = .lightGray
-        title = "Profile"
-        
-        setupProfileHeader()
-        setupBottomButton()
+        setupTableView()
+        setupDelegateAndDataSource()
     }
     
-    private func setupProfileHeader() {
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(profileHeaderView)
+    private func setupTableView() {
+        view.addSubview(tableView)
+        
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
         
         NSLayoutConstraint.activate([
-            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
-    private func setupBottomButton() {
-        view.addSubview(bottomButton)
+    private func setupDelegateAndDataSource() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension ProfileViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
+            return UITableViewCell()
+        }
         
-        NSLayoutConstraint.activate([
-            bottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            bottomButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        let post = posts[indexPath.row]
+        cell.configure(with: post)
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ProfileHeaderView()
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 220
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400
     }
 }

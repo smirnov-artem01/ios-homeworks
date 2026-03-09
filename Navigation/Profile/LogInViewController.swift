@@ -32,6 +32,7 @@ class LogInViewController: UIViewController {
         tf.autocapitalizationType = .none
         tf.backgroundColor = .systemGray6
         tf.layer.cornerRadius = 10
+        tf.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // скругление только сверху
         tf.layer.borderWidth = 0.5
         tf.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -44,7 +45,7 @@ class LogInViewController: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
-    
+
     private let passwordTF: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Password"
@@ -54,6 +55,7 @@ class LogInViewController: UIViewController {
         tf.isSecureTextEntry = true
         tf.backgroundColor = .systemGray6
         tf.layer.cornerRadius = 10
+        tf.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         tf.layer.borderWidth = 0.5
         tf.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -73,6 +75,7 @@ class LogInViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16)
         button.layer.cornerRadius = 10
+        button.clipsToBounds = true
         
         if let backgroundImage = UIImage(named: "blue_pixel") {
             button.setBackgroundImage(backgroundImage, for: .normal)
@@ -143,25 +146,22 @@ class LogInViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // Logo
+
             logoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
             logoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 100),
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             
-            // Login TF
             loginTF.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
             loginTF.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginTF.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             loginTF.heightAnchor.constraint(equalToConstant: 50),
             
-            // Password TF
-            passwordTF.topAnchor.constraint(equalTo: loginTF.bottomAnchor, constant: 16),
+            passwordTF.topAnchor.constraint(equalTo: loginTF.bottomAnchor, constant: 0),
             passwordTF.leadingAnchor.constraint(equalTo: loginTF.leadingAnchor),
             passwordTF.trailingAnchor.constraint(equalTo: loginTF.trailingAnchor),
             passwordTF.heightAnchor.constraint(equalToConstant: 50),
             
-            // Login Button
             loginButton.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: loginTF.leadingAnchor),
             loginButton.trailingAnchor.constraint(equalTo: loginTF.trailingAnchor),

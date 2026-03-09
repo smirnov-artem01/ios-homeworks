@@ -2,7 +2,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    private let post = Post(title: "Первый пост")
+    private let post = Post.makePosts().first!
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
