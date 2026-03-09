@@ -1,4 +1,3 @@
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -20,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         feedViewController.title = "Лента"
         feedViewController.view.backgroundColor = .systemYellow
         
-        let profileViewController = ProfileViewController()
-        profileViewController.title = "Профиль"
+        let logInViewController = LogInViewController() 
+            logInViewController.title = "Профиль"
         
         let tabBarController = UITabBarController()
         
@@ -30,13 +29,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             image: UIImage(systemName: "newspaper"),
             tag: 0
         )
-        profileViewController.tabBarItem = UITabBarItem(
+            logInViewController.tabBarItem = UITabBarItem(
             title: "Профиль",
             image: UIImage(systemName: "person"),
             tag: 1
         )
         
-        let controllers = [feedViewController, profileViewController]
+        let controllers = [feedViewController, logInViewController]
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }
@@ -66,7 +65,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
        
     }
-
-
 }
 
