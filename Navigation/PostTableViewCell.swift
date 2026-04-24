@@ -1,4 +1,6 @@
 import UIKit
+import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     
@@ -91,9 +93,17 @@ class PostTableViewCell: UITableViewCell {
     // MARK: - Configure
     func configure(with post: Post) {
         authorLabel.text = post.author
-        postImageView.image = UIImage(named: post.image)
         descriptionLabel.text = post.description
         likesLabel.text = "Likes: \(post.likes)"
         viewsLabel.text = "Views: \(post.views)"
+        
+        guard let image = UIImage(named: post.image) else { return }
+        
+        let imageProcessor = ImageProcessor()
+        imageProcessor.processImage(sourceImage: image, filter: ColorFilter.noir) { [weak self] processedImage in
+            DispatchQueue.main.async {
+                self?.postImageView.image = processedImage ?? image
+            }
+        }
     }
 }

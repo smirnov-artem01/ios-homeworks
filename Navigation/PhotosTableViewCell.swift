@@ -78,7 +78,7 @@ class PhotosTableViewCell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            stackView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.25) // 4 фото в ряд
+            stackView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.25) 
         ])
     }
     

@@ -1,4 +1,5 @@
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -12,7 +13,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        #if DEBUG
+        view.backgroundColor = .systemGreen
+        #else
+        view.backgroundColor = .systemRed
+        #endif
         
         setupTableView()
         setupDelegateAndDataSource()
